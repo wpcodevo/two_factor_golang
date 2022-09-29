@@ -20,6 +20,8 @@ type User struct {
 	Otp_auth_url string
 }
 
-func (user *User) BeforeCreate(tx *gorm.DB) {
+func (user *User) BeforeCreate(*gorm.DB) error {
 	user.ID = uuid.NewV4()
+
+	return nil
 }
