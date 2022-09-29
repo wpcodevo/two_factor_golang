@@ -14,9 +14,7 @@ type User struct {
 	Otp_enabled  bool `gorm:"default:false;"`
 	Otp_verified bool `gorm:"default:false;"`
 
-	Otp_ascii    string
-	Otp_hex      string
-	Otp_base32   string
+	Otp_secret   string
 	Otp_auth_url string
 }
 
@@ -24,4 +22,20 @@ func (user *User) BeforeCreate(*gorm.DB) error {
 	user.ID = uuid.NewV4()
 
 	return nil
+}
+
+type RegisterUserInput struct {
+	Name     string `json:"name" binding:"required"`
+	Email    string `json:"email" bindinig:"required"`
+	Password string `json:"password" binding:"required"`
+}
+
+type LoginUserInput struct {
+	Email    string `json:"email" bindinig:"required"`
+	Password string `json:"password" binding:"required"`
+}
+
+type OTPInput struct {
+	UserId string `json:"user_id"`
+	Token  string `json:"token"`
 }
